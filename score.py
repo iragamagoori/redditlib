@@ -6,6 +6,6 @@ def score(r, fullnames, smooth_count = 5):
             scores[info.fullname] += info.score
 
     for id in scores.keys():
-        scores[id] /= float(self.smooth_count)
+        scores[id] /= float(smooth_count)
 
     return scores
