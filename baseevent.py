@@ -10,12 +10,14 @@ class BaseEvent(object):
         self.previous = previous
         if t is None:
             t = datetime.datetime.now()
-        self.time = t
+        self.timestamp = (t - self._epoch).total_seconds()
+        self.age = t - datetime.datetime.fromtimestamp(self.submission.created_utc)
 
     def json_obj(self):
         return {
             'type': self.type,
-            'timestamp': (self.time - self._epoch).total_seconds(),
+            'timestamp': self.timestamp,
+            'age': self.age,
             'id': self.submission.fullname,
             'current': self.current,
             'previous': self.previous,
