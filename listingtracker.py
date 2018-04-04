@@ -1,24 +1,9 @@
 import datetime
+from baseevent import BaseEvent
 
-class ListingEvent(object):
-    _epoch = datetime.datetime.utcfromtimestamp(0)
-
+class ListingEvent(BaseEvent):
     def __init__(self, submission, new_position, prev_position, t=None):
-        self.submission = submission
-        self.new_position = new_position
-        self.prev_position = prev_position
-        if t is None:
-            t = datetime.datetime.now()
-        self.time = t
-
-    def json_obj(self):
-        return {
-            'type': 'listing',
-            'timestamp': (self.time - self._epoch).total_seconds(),
-            'id': self.submission.fullname,
-            'new_position': self.new_position,
-            'prev_position': self.prev_position,
-        }
+        BaseEvent.__init__(self, 'listing', submission, new_position, prev_position, t)
 
 class ListingTracker(object):
     def __init__(self, list_fn, n=25):
