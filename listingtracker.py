@@ -6,7 +6,10 @@ class ListingEvent(BaseEvent):
         BaseEvent.__init__(self, 'listing', submission, new_position, prev_position, t)
 
 class ListingTracker(object):
-    def __init__(self, list_fn, n=25):
+    def __init__(self, list_fn, n = None):
+        if n is None:
+            n = 25
+
         self.list_fn = list_fn
         self.n = n
         self.prev_positions = {}

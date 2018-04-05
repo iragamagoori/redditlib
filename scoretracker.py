@@ -9,7 +9,10 @@ class ScoreEvent(BaseEvent):
         BaseEvent.__init__(self, 'score', submission, new_score, prev_score, t)
 
 class ScoreTracker(object):
-    def __init__(self, r, smooth_count = 5):
+    def __init__(self, r, smooth_count = None):
+        if smooth_count is None:
+            smooth_count = 5
+
         self.r = r
         self.smooth_count = smooth_count
         self.scores = {}
