@@ -13,7 +13,7 @@ class ListingTracker(object):
         self.list_fn = list_fn
         self.n = n
         self.prev_positions = {}
-        self.seen = set()
+        self.submissions = {}
 
     def check(self):
         events = []
@@ -21,6 +21,8 @@ class ListingTracker(object):
 
         seen = set()
         for i,submission in enumerate(self.list_fn(limit=self.n)):
+            self.submissions[submission.fullname] = submission
+
             seen.add(submission.fullname)
 
             prev_position = self.prev_positions.get(submission.fullname, -1)
@@ -29,9 +31,11 @@ class ListingTracker(object):
 
             next_positions[submission.fullname] = i
 
-        for fullname in self.prev_positions:
+        for fullname,prev_position in self.prev_positions.iteritems():
             if fullname not in seen:
+                submission = self.submissions[fullname]
                 events.append(ListingEvent(submission, 0, prev_position+1))
+                del self.submissions[fullname]
 
         self.prev_positions = next_positions
         return events
