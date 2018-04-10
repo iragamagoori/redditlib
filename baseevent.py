@@ -17,7 +17,7 @@ class BaseEvent(object):
         return {
             'type': self.type,
             'timestamp': self.timestamp,
-            'age': self.age,
+            'age': self.age.total_seconds(),
             'id': self.submission.fullname,
             'current': self.current,
             'previous': self.previous,
